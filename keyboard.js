@@ -32,6 +32,52 @@ if (this.y < 0) {
     this.y = 0 
 }
 };
+
+Ball.prototype.draw = function () {
+    circle(this.x, this.y, 10, true)
+}
+
+Ball.prototype.setDirection = function (direction) {
+    if(direction === "up"){
+        this.xSpeed = 0;
+        this.ySpeed = -5;
+    } else if (direction === "down") {
+        this.xSpeed = 0;
+        this.ySpeed = 5;
+    }else if (direction === "left") {
+        this.xSpeed = -5;
+        this.ySpeed = 0;
+    }else if (direction === "right") {
+        this.xSpeed = 5;
+        this.ySpeed = 0;
+    }else if (direction === "Stop") {
+        this.xSpeed = 0;
+        this.ySpeed = 0;
+    }
+}
+
+
+let ball = new Ball();//рисует новый мяч
+
+let keyActions = { //задает название коду буквы
+    32: "Stop",
+    38: "up",
+    40: "down",
+    37: "left",
+    39: "right"
+}
+$("body").keydown(function (event){//обработчик события нажатия клавиш
+    let direction= keyActions[event.keyCode]
+    ball.setDirection(direction)
+   })
+
+   setInterval(function (){
+    ctx.clearRect(0, 0, width, height);
+    ball.draw();
+    ball.move();
+    ctx.strokeRect(0, 0, width, height);
+   }, 30)
+
 /*
 let keyNames = {
 87: "W",
